@@ -1,0 +1,14 @@
+monitoreo_continuo/
+├── manage.py
+├── requirements.txt
+├── monitoreo/
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── ml/
+│       ├── __init__.py
+│       ├── anomaly_detector.py
+│       ├── predictive_models.py
+│       └── sensor_analyzer.py
+└── config/
+    └── settings.py
