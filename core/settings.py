@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'erp_mantenimiento',  # El nombre que creaste en pgAdmin
+        'USER': 'postgres',           # Tu usuario de Postgres
+        'PASSWORD': 'admin1234',    # La que pusiste al instalar
+        'HOST': '127.0.0.1',          # O 'localhost'
+        'PORT': '5432',               # El puerto estándar
     }
 }
 
