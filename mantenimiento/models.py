@@ -6,13 +6,25 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
-
+from phonenumber_field.modelfields import PhoneNumberField
 class Clientes(models.Model):
     nombre = models.CharField(max_length=150)
-    rut = models.CharField(unique=True, max_length=20, blank=True, null=True)
+    rut = models.CharField(max_length=20, unique=True)
     direccion = models.TextField(blank=True, null=True)
-    telefono = models.CharField(max_length=50, blank=True, null=True)
+    telefono = PhoneNumberField(region="CL", blank=True, null=True)
+
+    # El save SIEMPRE va al final, después de los campos
+    def save(self, *args, **kwargs):
+        rut_limpio = str(self.rut).replace(".", "").replace("-", "").upper()
+        if len(rut_limpio) > 1:
+            cuerpo = rut_limpio[:-1]
+            dv = rut_limpio[-1]
+            try:
+                cuerpo_formateado = "{:,}".format(int(cuerpo)).replace(",", ".")
+                self.rut = f"{cuerpo_formateado}-{dv}"
+            except:
+                pass
+        super().save(*args, **kwargs)
 
     class Meta:
         managed = False
